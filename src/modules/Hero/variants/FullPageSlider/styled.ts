@@ -1,21 +1,18 @@
+// styled.ts
 import styled from "@emotion/styled";
 import { Theme } from "@styles/colors";
 import { MediaQuery } from "@styles/mediaQuery";
 
 export const FullPageSliderStyled = styled.div`
     width: 100%;
-
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
     margin: 0 auto;
     position: relative;
-
     height: 100dvh;
     min-height: 550px;
-
     background: ${Theme.secondary};
     position: relative;
     overflow: hidden;
@@ -29,7 +26,6 @@ export const FullPageSliderStyled = styled.div`
         justify-content: flex-start;
         z-index: 1;
         width: 100%;
-        height: auto;
         background: ${Theme.tertiary};
         max-width: 500px;
         height: 15px;
@@ -64,23 +60,9 @@ export const FullPageSliderStyled = styled.div`
     .swiper {
         height: 100%;
     }
-
-    .blog-content & {
-        h1 {
-            font-size: 90px;
-            line-height: 95px;
-
-            ${MediaQuery.max("lg")} {
-                font-size: 40px;
-                line-height: 50px;
-            }
-        }
-    }
 `;
 
-export const FullPageSliderSlide = styled.div<{
-    $bgImage: string;
-}>`
+export const FullPageSliderSlide = styled.div<{ $bgImage: string }>`
     height: 100%;
     position: relative;
     overflow: hidden;
@@ -92,16 +74,6 @@ export const FullPageSliderSlide = styled.div<{
         padding: 0 20px;
     }
 
-    .swiper-slide-drag {
-        transition: none; /* Add this line */
-    }
-
-    .swiper-backface-hidden .swiper-slide {
-        transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-    }
-
     .swiper-slide {
         height: 100%;
         overflow: hidden;
@@ -111,11 +83,9 @@ export const FullPageSliderSlide = styled.div<{
 export const FullPageSliderSlideImg = styled.figure`
     height: 100%;
     width: 100%;
-    top: 0;
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
-    right: 0;
 
     &:before {
         content: "";
@@ -123,8 +93,6 @@ export const FullPageSliderSlideImg = styled.figure`
         width: 100%;
         height: 100%;
         z-index: 1;
-        top: 0;
-        left: -1px;
         background-color: transparent;
         background-image: radial-gradient(
             at center right,
@@ -203,6 +171,7 @@ export const FullPageSliderSlideContentSubtitle = styled.p`
     }
 `;
 
+// Styled component for the right arrow (next slide)
 export const FullPageSliderTextToSlide = styled.span`
     position: absolute;
     right: 40px;
@@ -214,10 +183,10 @@ export const FullPageSliderTextToSlide = styled.span`
     line-height: 25px;
     color: ${Theme.primary};
     z-index: 1;
-
     display: flex;
     align-items: center;
-    pointer-events: none;
+    cursor: pointer; /* Clickable */
+    pointer-events: auto; /* Enable click events */
 
     ${MediaQuery.max("lg")} {
         font-size: 14px;
@@ -232,5 +201,39 @@ export const FullPageSliderTextToSlide = styled.span`
 
     img {
         margin-left: 10px;
+    }
+`;
+
+// Styled component for the left arrow (previous slide)
+export const FullPageSliderLeftArrow = styled.span`
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    transform: translateX(50%);
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: 25px;
+    color: ${Theme.primary};
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* Clickable */
+    pointer-events: auto; /* Enable click events */
+
+    ${MediaQuery.max("lg")} {
+        font-size: 14px;
+        line-height: 18px;
+        left: 50%;
+        right: unset;
+        bottom: 45px;
+        transform: translateX(-50%);
+        justify-content: center;
+        width: 100%;
+    }
+
+    img {
+        margin-right: 10px;
+        transform: rotate(180deg); /* Rotate the icon to point left */
     }
 `;

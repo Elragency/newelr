@@ -1,6 +1,7 @@
-import React, { type FC } from "react";
-
-import * as S from "./styled";
+// Fullpageslider.tsx
+import React, { type FC, useRef } from "react";
+import { Swiper as SwiperCore } from "swiper";
+import * as S from "./styled"; // Ensure you're importing the right styled components
 import { SwiperSlider } from "@components/SwiperSlider";
 import { Parallax, Pagination, Autoplay } from "swiper/modules";
 import { Icon } from "@static/icons";
@@ -8,7 +9,6 @@ import { FadeIn } from "@utils/animations/FadeIn";
 import { Button } from "@components/Button";
 
 export type FullPageSliderProps = {
-    // content treated as HTML output
     content?: {
         background: string;
         subtitle?: string;
@@ -22,15 +22,13 @@ export type FullPageSliderProps = {
 };
 
 export const FullPageSlider: FC<FullPageSliderProps> = ({ content }) => {
-    // do not render if there are no elements
+    const swiperRef = useRef<SwiperCore | null>(null); // Swiper reference to access the swiper instance
+
     if (!content || content.length === 0) {
         return null;
     }
 
-    /**
-     * All slides are generated here based on the content prop
-     * @param slide - slide content
-     */
+    // Generate all slides
     const slides = content.map((slide, index) => (
         <S.FullPageSliderSlide key={index} $bgImage={slide.background}>
             {slide.background && (
@@ -61,9 +59,17 @@ export const FullPageSlider: FC<FullPageSliderProps> = ({ content }) => {
         </S.FullPageSliderSlide>
     ));
 
+    // Function to go to the next slide
+    const goToNextSlide = () => {
+        if (swiperRef.current) {
+            swiperRef.current.slideNext(); // Move to the next slide
+        }
+    };
+
     return (
         <S.FullPageSliderStyled>
             <SwiperSlider
+                onSwiper={(swiper) => (swiperRef.current = swiper)} // Get swiper instance and store it in swiperRef
                 modules={[Parallax, Pagination, Autoplay]}
                 options={{
                     slidesPerView: 1,
@@ -71,10 +77,10 @@ export const FullPageSlider: FC<FullPageSliderProps> = ({ content }) => {
                     speed: 1000,
                     spaceBetween: 0,
                     effect: "slide",
-                    loop: false,
-                    grabCursor: true, // Add this line
+                    loop: true, // Enable looping
+                    loopAdditionalSlides: 1, // Preload additional slides for smooth looping
+                    grabCursor: true,
                     pagination: {
-                        // Add this option
                         el: ".swiper-pagination",
                         type: "progressbar",
                     },
@@ -87,15 +93,15 @@ export const FullPageSlider: FC<FullPageSliderProps> = ({ content }) => {
             </SwiperSlider>
             {slides.length > 1 ? (
                 <>
-                    <S.FullPageSliderTextToSlide>
-                        Swipe to slide
+                    <S.FullPageSliderTextToSlide onClick={goToNextSlide}>
+                        Glisser Pour Défiler
                         <Icon iconData="arrowRight" alt="arrow icon" />
                     </S.FullPageSliderTextToSlide>
                     <div className="swiper-pagination"></div>
                 </>
             ) : (
                 <S.FullPageSliderTextToSlide>
-                    Scroll down
+                    Descendre vers le bas
                     <Icon iconData="arrowDown" alt="arrow icon" />
                 </S.FullPageSliderTextToSlide>
             )}
