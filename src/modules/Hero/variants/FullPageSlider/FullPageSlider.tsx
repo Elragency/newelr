@@ -71,7 +71,7 @@ export const FullPageSlider: FC<FullPageSliderProps> = ({ content }) => {
                     speed: 1000,
                     spaceBetween: 0,
                     effect: "slide",
-                    loop: false,
+                    loop: true,
                     grabCursor: true, // Add this line
                     pagination: {
                         // Add this option
@@ -88,14 +88,14 @@ export const FullPageSlider: FC<FullPageSliderProps> = ({ content }) => {
             {slides.length > 1 ? (
                 <>
                     <S.FullPageSliderTextToSlide>
-                        Glisser Pour Défiler
+                        Swipe to slide
                         <Icon iconData="arrowRight" alt="arrow icon" />
                     </S.FullPageSliderTextToSlide>
                     <div className="swiper-pagination"></div>
                 </>
             ) : (
                 <S.FullPageSliderTextToSlide>
-                    Descendre vers le bas
+                    Scroll down
                     <Icon iconData="arrowDown" alt="arrow icon" />
                 </S.FullPageSliderTextToSlide>
             )}
